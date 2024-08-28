@@ -1,50 +1,32 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caça-Palavras: Contáveis e Incontáveis</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Fase 1 - Caça-palavras de Contáveis e Incontáveis</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <header>
-        <h1>Caça-Palavras: Contáveis e Incontáveis</h1>
-        <nav>
-            <ul>
-                <li><a href="#contables">Contáveis</a></li>
-                <li><a href="#incontables">Incontáveis</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-            </ul>
-        </nav>
-    </header>
-    
-    <main>
-        <section id="contables">
-            <h2>Palavras Contáveis</h2>
-            <div class="wordsearch" id="contables-wordsearch"></div>
-            <button onclick="checkWords('contables')">Verificar</button>
-            <button onclick="giveHint('contables')">Dicas</button>
-            <p id="contables-hint"></p>
-        </section>
-        
-        <section id="incontables">
-            <h2>Palavras Incontáveis</h2>
-            <div class="wordsearch" id="incontables-wordsearch"></div>
-            <button onclick="checkWords('incontables')">Verificar</button>
-            <button onclick="giveHint('incontables')">Dicas</button>
-            <p id="incontables-hint"></p>
-        </section>
-        
-        <section id="sobre">
-            <h2>Sobre</h2>
-            <p>Este site apresenta caça-palavras para ajudar a distinguir palavras contáveis e incontáveis em inglês.</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 LgCodes e SESI Cataguases. Todos os direitos reservados.</p>
-    </footer>
-    
-    <script src="script.js"></script>
+    <div class="container">
+        <h1>Fase 1 - Caça-palavras de Contáveis e Incontáveis</h1>
+        <p>Categoria: Gramática Inglesa</p>
+        <p>Dicas:</p>
+        <ul>
+            <li>1. Substantivo que pode ser contado, como 'apple'.</li>
+            <li>2. Substantivo que não pode ser contado, como 'water'.</li>
+            <li>3. Substantivo que é um exemplo de contável, como 'book'.</li>
+            <li>4. Substantivo que é um exemplo de incontável, como 'sugar'.</li>
+            <li>5. Substantivo contável plural de 'child'.</li>
+            <li>6. Substantivo incontável que pode ser encontrado em 'coffee'.</li>
+            <li>7. Substantivo contável plural de 'country'.</li>
+            <li>8. Substantivo incontável relacionado à comida, como 'rice'.</li>
+            <li>9. Substantivo contável de 'mouse'.</li>
+            <li>10. Substantivo incontável para 'milk'.</li>
+        </ul>
+        <div id="wordsearch"></div>
+        <button id="check" onclick="checkWords()">Verificar Palavras</button>
+        <div id="result"></div>
+    </div>
 </body>
 </html>
