@@ -61,6 +61,20 @@ h1, h2 {
     font-weight: bold;
 }
 
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
 footer {
     background-color: #4CAF50;
     color: white;
