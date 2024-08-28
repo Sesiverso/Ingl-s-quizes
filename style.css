@@ -1,121 +1,72 @@
-/* Estilos Gerais */
+/* styles.css */
+
 body {
-    font-family: 'Montserrat', sans-serif; /* Fonte moderna e limpa */
-    background-color: #282c34; /* Fundo escuro elegante */
-    color: #ffffff; /* Texto branco para contraste */
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
-/* Container Principal */
-.container {
-    max-width: 800px;
-    width: 90%;
-    padding: 30px;
-    background-color: #1c1f26; /* Cor de fundo do container mais clara */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    transition: all 0.3s ease;
-}
-
-.container:hover {
-    transform: scale(1.02);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
-}
-
-/* Cabeçalho */
 header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1em;
     text-align: center;
-    padding: 20px 0;
-    margin-bottom: 20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.8em;
-    color: #61dafb; /* Azul vibrante */
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Questões e Respostas */
-.question {
-    margin-bottom: 20px;
-}
-
-.question h3 {
-    margin-bottom: 10px;
-    font-size: 1.5em;
-    color: #61dafb; /* Azul vibrante */
-}
-
-.answers {
+nav ul {
     list-style: none;
     padding: 0;
-    margin: 10px 0;
 }
 
-.answers li {
-    margin-bottom: 15px;
-    font-size: 1.2em;
-    color: #f0f0f0;
+nav ul li {
+    display: inline;
+    margin: 0 15px;
 }
 
-.answers input[type="radio"] {
-    margin-right: 10px;
-    transform: scale(1.2);
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
 
-label {
-    font-size: 1.1em;
-    cursor: pointer;
+main {
+    padding: 1em;
 }
 
-/* Botão */
-button {
+h1, h2 {
+    color: #4CAF50;
+}
+
+.wordsearch {
+    background-color: white;
+    border: 2px solid #4CAF50;
+    padding: 1em;
+    margin: 1em 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    gap: 2px;
+}
+
+.wordsearch span {
     display: block;
-    width: 100%;
-    padding: 15px;
-    font-size: 1.2em;
-    color: #ffffff;
-    background-color: #61dafb; /* Azul vibrante */
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 20px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-button:hover {
-    background-color: #21a1f1; /* Azul mais escuro para o efeito hover */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Resultado */
-#result {
-    margin-top: 20px;
-    font-size: 1.5em;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    color: #ffffff;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    font-size: 18px;
+    font-weight: bold;
 }
 
-/* Rodapé */
 footer {
+    background-color: #4CAF50;
+    color: white;
     text-align: center;
-    padding: 10px 0;
-    margin-top: 30px;
-    color: #888888; /* Cinza claro para rodapé */
-    font-size: 0.9em;
-}
-
-footer p {
-    margin: 0;
-    text-transform: uppercase;
+    padding: 1em;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
 }
