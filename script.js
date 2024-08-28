@@ -1,107 +1,106 @@
-// script.js
+const words = [
+    "APPLE", "WATER", "BOOK", "SUGAR", "CHILDREN",
+    "COFFEE", "COUNTRIES", "RICE", "MICE", "MILK"
+];
 
-const contablesWords = ["apple", "book", "cat", "dog"];
-const incontablesWords = ["water", "rice", "music", "furniture"];
+const correctWords = new Set(words);
+const gridSize = 10;
+let selectedCells = [];
+let foundWords = new Set();
 
-function generateWordsearch(words) {
-    const size = 10;
-    const grid = Array(size).fill(null).map(() => Array(size).fill(''));
+const wordsearch = document.getElementById('wordsearch');
 
-    function placeWord(word) {
-        const direction = Math.random() < 0.5 ? 'horizontal' : 'vertical';
-        const row = Math.floor(Math.random() * size);
-        const col = Math.floor(Math.random() * size);
-
-        if (direction === 'horizontal') {
-            if (col + word.length <= size) {
-                for (let i = 0; i < word.length; i++) {
-                    grid[row][col + i] = word[i];
-                }
-            } else {
-                placeWord(word);
-            }
-        } else {
-            if (row + word.length <= size) {
-                for (let i = 0; i < word.length; i++) {
-                    grid[row + i][col] = word[i];
-                }
-            } else {
-                placeWord(word);
-            }
+function createGrid() {
+    for (let i = 0; i < gridSize; i++) {
+        for (let j = 0; j < gridSize; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            cell.addEventListener('click', () => selectCell(cell));
+            wordsearch.appendChild(cell);
         }
     }
+    fillGrid();
+}
 
-    words.forEach(placeWord);
+function fillGrid() {
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    document.querySelectorAll('.cell').forEach(cell => {
+        const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+        cell.textContent = randomLetter;
+    });
 
-    for (let row = 0; row < size; row++) {
-        for (let col = 0; col < size; col++) {
-            if (grid[row][col] === '') {
-                grid[row][col] = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    words.forEach(word => {
+        placeWordInGrid(word);
+    });
+}
+
+function placeWordInGrid(word) {
+    const direction = Math.floor(Math.random() * 3);
+    let startRow, startCol;
+
+    switch(direction) {
+        case 0:
+            startRow = Math.floor(Math.random() * gridSize);
+            startCol = Math.floor(Math.random() * (gridSize - word.length));
+            for (let i = 0; i < word.length; i++) {
+                const cell = document.querySelector(`.cell[data-row='${startRow}'][data-col='${startCol + i}']`);
+                cell.textContent = word[i];
+                cell.dataset.word = word;
             }
-        }
+            break;
+        case 1:
+            startRow = Math.floor(Math.random() * (gridSize - word.length));
+            startCol = Math.floor(Math.random() * gridSize);
+            for (let i = 0; i < word.length; i++) {
+                const cell = document.querySelector(`.cell[data-row='${startRow + i}'][data-col='${startCol}']`);
+                cell.textContent = word[i];
+                cell.dataset.word = word;
+            }
+            break;
+        case 2:
+            startRow = Math.floor(Math.random() * (gridSize - word.length));
+            startCol = Math.floor(Math.random() * (gridSize - word.length));
+            for (let i = 0; i < word.length; i++) {
+                const cell = document.querySelector(`.cell[data-row='${startRow + i}'][data-col='${startCol + i}']`);
+                cell.textContent = word[i];
+                cell.dataset.word = word;
+            }
+            break;
     }
-
-    return grid;
 }
 
-function displayWordsearch(grid, elementId) {
-    const gridElement = document.getElementById(elementId);
-    gridElement.innerHTML = '';
+function selectCell(cell) {
+    if (!cell.classList.contains('selected')) {
+        cell.classList.add('selected');
+        selectedCells.push(cell);
+    } else {
+        cell.classList.remove('selected');
+        selectedCells = selectedCells.filter(c => c !== cell);
+    }
+}
 
-    grid.forEach(row => {
-        row.forEach(letter => {
-            const cell = document.createElement('span');
-            cell.textContent = letter;
-            gridElement.appendChild(cell);
-        });
+function checkWords() {
+    const selectedWord = selectedCells.map(cell => cell.textContent).join('');
+    const result = document.getElementById('result');
+
+    if (correctWords.has(selectedWord)) {
+        result.textContent = `Parabéns! Você encontrou uma palavra: ${selectedWord}!`;
+        disableWordCells(selectedWord);
+        foundWords.add(selectedWord);
+        selectedCells = [];
+    } else {
+        result.textContent = 'Palavra incorreta. Tente novamente.';
+    }
+}
+
+function disableWordCells(word) {
+    document.querySelectorAll(`.cell[data-word='${word}']`).forEach(cell => {
+        cell.classList.add('found');
+        cell.removeEventListener('click', () => selectCell(cell));
+        cell.style.backgroundColor = '#28a745';
     });
 }
 
-const contablesGrid = generateWordsearch(contablesWords);
-const incontablesGrid = generateWordsearch(incontablesWords);
-
-displayWordsearch(contablesGrid, 'contables-wordsearch');
-displayWordsearch(incontablesGrid, 'incontables-wordsearch');
-
-function checkWords(section) {
-    const words = section === 'contables' ? contablesWords : incontablesWords;
-    const gridElement = document.getElementById(`${section}-wordsearch`);
-    const cells = gridElement.querySelectorAll('span');
-    const grid = Array.from({ length: 10 }, () => Array(10).fill(''));
-
-    cells.forEach((cell, index) => {
-        const row = Math.floor(index / 10);
-        const col = index % 10;
-        grid[row][col] = cell.textContent;
-    });
-
-    const foundWords = words.every(word => {
-        return findWordInGrid(grid, word);
-    });
-
-    alert(foundWords ? 'Parabéns! Você encontrou todas as palavras!' : 'Algumas palavras estão faltando. Tente novamente.');
-}
-
-function findWordInGrid(grid, word) {
-    function searchLine(line, word) {
-        const lineStr = line.join('');
-        return lineStr.includes(word) || lineStr.includes(word.split('').reverse().join(''));
-    }
-
-    for (let row = 0; row < grid.length; row++) {
-        if (searchLine(grid[row], word)) return true;
-    }
-
-    for (let col = 0; col < grid[0].length; col++) {
-        const column = grid.map(row => row[col]);
-        if (searchLine(column, word)) return true;
-    }
-
-    return false;
-}
-
-function giveHint(section) {
-    const words = section === 'contables' ? contablesWords : incontablesWords;
-    const hintElement = document.getElementById(`${section}-hint`);
-    hintElement.textContent = `Dica: Procure por palavras como ${words.join(', ')}.`;
-}
+createGrid();
